@@ -22,6 +22,25 @@
   color:white;
 }
 
+#timer{
+  float:right;
+  margin-top:20px;
+  margin-right:5%;
+text-align: center;
+
+  font-size: 150%;
+  width: 100px;
+  height: 100px;
+  border: 4px solid black;
+  border-radius: 75px;
+
+  padding-top: 5px;
+  background-color: orange;
+  color:white;
+
+}
+
+
 .label{
 
   margin:auto;
@@ -189,10 +208,13 @@ margin-top: 20px;
 
 
 <body class = "body">
-<div >
-  <div><button  id = "backBox"  onclick="restartGame()"><--BACK!</button></div>
-<h1 class="center">Quick Tricklation - Stage 20!</h1>
-</div>
+  <div >
+    <button  id = "backBox"  onclick="restartGame()"><--BACK!</button>
+    <button id = "timer" disabled>Timer</button>
+    <h1 class="center">Quick Tricklation – Stage 20!</h1>
+    <br>
+    </div>
+
 
 <div id="myProgress">
   <div id="myBar">Progress Bar</div>
@@ -213,6 +235,35 @@ margin-top: 20px;
 
 
 <script>
+
+//Timer variables
+//This sets the countdown at 15 sections
+var timeleft = 15;
+var countdown = setInterval(countDownTimer,1000);
+
+function countDownTimer(){
+
+document.getElementById("timer").style.color = "white";
+		document.getElementById("timer").innerHTML = timeleft;
+  		timeleft -= 1;
+  			if(timeleft <= 0)  {
+    			clearInterval(countdown);
+    			document.getElementById("timer").innerHTML = "Time's Up!";
+					document.getElementById("timer").style.color = "black";
+  }
+
+}
+
+//This stops the timer and resets it to 15 seconds
+function stopTimer() {
+
+  clearInterval(countdown);
+  document.getElementById("timer").innerHTML = "Timer";
+timeleft = 15;
+
+}
+
+stopTimer()
 
 //This sets the width for the progress bar called "myBar"
 let width = 0;
@@ -871,12 +922,13 @@ let bar = document.getElementById("myBar");
 
     //This sets the colors of box 1 for the first game
       document.getElementById("box1").innerHTML = "Start!"
+      document.getElementById("timer").innerHTML = "Timer"
       document.getElementById("box1").style.background = "yellow";
       document.getElementById("box1").style.color = "black";
       document.getElementById("myBar").style.width = "0";
       width = 0;
 
-
+  stopTimer();
     hideDemo();
     hideDemo2();
     hideBox2();
@@ -894,6 +946,19 @@ let bar = document.getElementById("myBar");
 
   //resetSentence();
   unHideProgressBar();
+
+  function hideTimer(){
+  document.getElementById("timer").style.display = "none" ;
+}
+
+function unHideTimer(){
+  document.getElementById("timer").style.display = "block" ;
+}
+
+
+ hideTimer();
+hideBackBox();
+
 
 
   function hideBackBox(){
@@ -999,6 +1064,12 @@ function startGame(){
    tneuti = Math.floor(Math.random() * thisThatNomNeutSing.length);
 
 //console.log(subject[rsi][0]);
+
+unHideTimer();
+unHideBackBox();
+countdown = setInterval(countDownTimer,1000);
+
+
 
   unHideBackBox();
       hideBox1();
@@ -1239,6 +1310,9 @@ if (randSentence == 0){
 
 //var ranDirectObject = [[myLatinSentence.accPluralObject(),dirObjComboSing[ranDirObjComboSingIndx][4]],[myLatinSentence.accSingObject(),myTranslation.object]]
 //var ranDirectObjectIndx = Math.floor(Math.random() * ranDirectObject.length);
+
+document.getElementById("timer").style.color = "white";
+stopTimer();
 
 
   unHideBox1();
